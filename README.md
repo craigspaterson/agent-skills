@@ -38,6 +38,30 @@ If a capability spans both (e.g. a new service with handler logic), produce one 
 
 ---
 
+## Install
+
+Install skills in Claude Code, GitHub Copilot, Cursor, and more using [skills.sh](https://skills.sh).
+
+### All Skills
+
+```bash
+npx skills add craigspaterson/claude-skills
+```
+
+### Individual Skills
+
+```bash
+# User Story skill
+npx skills add craigspaterson/claude-skills/skills/user-story
+
+# Technical Story skill
+npx skills add craigspaterson/claude-skills/skills/technical-story
+```
+
+Once installed, the agent activates a skill automatically when your request matches its description.
+
+---
+
 ## How to Use
 
 ### Option 1 — Claude.ai (manual paste)
