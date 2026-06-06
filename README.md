@@ -1,0 +1,104 @@
+# claude-skills
+
+A shared library of Claude skill definitions for the CEP team. Skills teach Claude consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
+
+---
+
+## What Is a Skill?
+
+A skill is a `SKILL.md` file that is loaded into Claude's context before a task. It defines:
+
+- **Output format** — the exact structure Claude should produce
+- **Writing guidelines** — naming conventions, tone, and rules
+- **Acceptance criteria checklists** — coverage prompts for common concerns
+- **Worked examples** — minimal input → full output pairs
+- **Behavior rules** — how Claude should handle edge cases and ambiguity
+
+---
+
+## Available Skills
+
+| Skill | Path | Purpose |
+|---|---|---|
+| `user-story` | `skills/user-story/SKILL.md` | Jira-formatted User Stories with AC — for human-facing features, UI, and user journeys |
+| `technical-story` | `skills/technical-story/SKILL.md` | Jira-formatted Technical Stories with AC — for IaC, CI/CD, IAM, Cloud Run, Pub/Sub, and backend logic |
+
+### When to use which
+
+| Request type | Skill |
+|---|---|
+| "Write a story for a new dashboard feature" | `user-story` |
+| "Story for provisioning a Cloud Run service via OpenTofu" | `technical-story` |
+| "Story for the GitHub Actions deploy workflow" | `technical-story` |
+| "Story for an IAM / Workload Identity binding" | `technical-story` |
+| "Story for a Pub/Sub subscription handler" | `technical-story` (Application sub-type) |
+| "Story for an API endpoint a user calls" | `user-story` |
+
+If a capability spans both (e.g. a new service with handler logic), produce one of each and link them as dependencies — the infrastructure story typically blocks the application story's integration testing.
+
+---
+
+## How to Use
+
+### Option 1 — Claude.ai (manual paste)
+
+1. Open a new Claude conversation.
+2. Copy the contents of the relevant `SKILL.md` file.
+3. Paste it at the start of your message, followed by your request.
+
+Example:
+
+```
+[paste contents of skills/technical-story/SKILL.md]
+
+Write a story for provisioning the cache-invalidation Cloud Run service in OpenTofu for the CEP AEM platform, gamma environment.
+```
+
+### Option 2 — Claude Code (recommended)
+
+If you use [Claude Code](https://docs.claude.ai/en/docs/claude-code/), you can reference skill files directly from the repo.
+
+1. Clone this repo locally:
+   ```bash
+   git clone git@github.com:<your-org>/claude-skills.git
+   ```
+2. In your `CLAUDE.md` or project instructions, reference the skill:
+   ```
+   Before writing any user story, read skills/user-story/SKILL.md.
+   Before writing any technical story, read skills/technical-story/SKILL.md.
+   ```
+3. Claude Code will load the skill automatically when triggered.
+
+### Option 3 — Claude.ai Projects (Team / Enterprise)
+
+If your workspace is on Claude.ai Team or Enterprise:
+
+1. Create a Project for your team.
+2. Upload the relevant `SKILL.md` files as Project knowledge.
+3. All team members in the project will have the skills available automatically in every conversation.
+
+---
+
+## Contributing
+
+To add or update a skill:
+
+1. Branch from `main`.
+2. Add or edit the `SKILL.md` under `skills/<skill-name>/`.
+3. Update the table in this README.
+4. Open a PR for review — skills affect output quality for the whole team, so a second pair of eyes is worthwhile.
+
+Skill files follow a standard frontmatter block at the top:
+
+```
+---
+name: skill-name
+description: One-sentence trigger description used by Claude to decide when to load this skill.
+---
+```
+
+---
+
+## Questions
+
+Reach out to the CEP platform team or raise a GitHub issue in this repo.
