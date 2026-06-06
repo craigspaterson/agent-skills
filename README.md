@@ -22,6 +22,7 @@ A skill is a `SKILL.md` file that is loaded into Claude's context before a task.
 |---|---|---|
 | `user-story` | `skills/user-story/SKILL.md` | Jira-formatted User Stories with AC — for human-facing features, UI, and user journeys |
 | `technical-story` | `skills/technical-story/SKILL.md` | Jira-formatted Technical Stories with AC — for IaC, CI/CD, IAM, Cloud Run, Pub/Sub, and backend logic |
+| `terraform-docs-inject` | `skills/terraform-docs-inject/SKILL.md` | Regenerate and inject Terraform documentation into `terraform/README.md` using `terraform-docs` |
 
 ### When to use which
 
@@ -56,6 +57,9 @@ npx skills add craigspaterson/claude-skills/skills/user-story
 
 # Technical Story skill
 npx skills add craigspaterson/claude-skills/skills/technical-story
+
+# Terraform Docs Inject skill
+npx skills add craigspaterson/claude-skills/skills/terraform-docs-inject
 ```
 
 Once installed, the agent activates a skill automatically when your request matches its description.
