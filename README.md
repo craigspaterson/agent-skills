@@ -1,6 +1,6 @@
 # claude-skills
 
-A shared library of Claude skill definitions for the CEP team. Skills teach Claude consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
+A shared library of Claude skill definitions. Skills teach Claude consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
 
 ---
 
@@ -51,7 +51,7 @@ Example:
 ```
 [paste contents of skills/technical-story/SKILL.md]
 
-Write a story for provisioning the cache-invalidation Cloud Run service in OpenTofu for the CEP AEM platform, gamma environment.
+Write a story for developing the cache-invalidation Cloud Run service in OpenTofu for the XYZ Platform.
 ```
 
 ### Option 2 — Claude Code (recommended)
@@ -101,4 +101,4 @@ description: One-sentence trigger description used by Claude to decide when to l
 
 ## Questions
 
-Reach out to the CEP platform team or raise a GitHub issue in this repo.
+Reach out to the team or raise a GitHub issue in this repo.
