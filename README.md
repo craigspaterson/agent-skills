@@ -46,20 +46,20 @@ Install skills in Claude Code, GitHub Copilot, Cursor, and more using [skills.sh
 ### All Skills
 
 ```bash
-npx skills add craigspaterson/claude-skills
+npx skills add craigspaterson/agent-skills
 ```
 
 ### Individual Skills
 
 ```bash
 # User Story skill
-npx skills add craigspaterson/claude-skills/skills/user-story
+npx skills add craigspaterson/agent-skills/skills/user-story
 
 # Technical Story skill
-npx skills add craigspaterson/claude-skills/skills/technical-story
+npx skills add craigspaterson/agent-skills/skills/technical-story
 
 # Terraform Docs Inject skill
-npx skills add craigspaterson/claude-skills/skills/terraform-docs-inject
+npx skills add craigspaterson/agent-skills/skills/terraform-docs-inject
 ```
 
 Once installed, the agent activates a skill automatically when your request matches its description.
