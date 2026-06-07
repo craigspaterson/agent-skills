@@ -75,7 +75,7 @@ Most agent tools load an instructions file automatically at the start of every s
 
 1. Clone this repo locally:
    ```bash
-   git clone git@github.com:<your-org>/claude-skills.git
+   git clone git@github.com:<your-org>/agent-skills.git
    ```
 2. In your agent instructions file, reference the skill:
    ```
