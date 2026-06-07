@@ -1,6 +1,6 @@
 # Claude Instructions
 
-This file is read automatically by Claude Code at the start of every session. It tells Claude which skills to load and provides project-specific context.
+This file is read automatically by Claude Code at the start of every session. It tells the agent which skills to load and provides project-specific context.
 
 ---
 
@@ -31,7 +31,7 @@ If unsure which story type applies, read both and use the decision table in `tec
 
 ## Conventions
 
-<!-- Document team-specific conventions Claude should follow -->
+<!-- Document team-specific conventions the agent should follow -->
 
 - Story granularity: `<e.g. one story per environment, or environment-agnostic with env as a variable>`
 - AC format: `AC[N] - Name` label on its own line, Given/When/Then each on separate lines, `---` dividers between blocks
@@ -42,7 +42,7 @@ If unsure which story type applies, read both and use the decision table in `tec
 
 ## Out of Scope
 
-<!-- Things Claude should not do in this repo without being explicitly asked -->
+<!-- Things the agent should not do in this repo without being explicitly asked -->
 
 - Do not modify IaC files directly unless asked
 - Do not commit or push changes

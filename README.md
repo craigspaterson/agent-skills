@@ -1,18 +1,18 @@
 # claude-skills
 
-A shared library of Claude skill definitions. Skills teach Claude consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
+A shared library of agent skill definitions. Skills teach your agent consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
 
 ---
 
 ## What Is a Skill?
 
-A skill is a `SKILL.md` file that is loaded into Claude's context before a task. It defines:
+A skill is a `SKILL.md` file that is loaded into the agent's context before a task. It defines:
 
-- **Output format** — the exact structure Claude should produce
+- **Output format** — the exact structure the agent should produce
 - **Writing guidelines** — naming conventions, tone, and rules
 - **Acceptance criteria checklists** — coverage prompts for common concerns
 - **Worked examples** — minimal input → full output pairs
-- **Behavior rules** — how Claude should handle edge cases and ambiguity
+- **Behavior rules** — how the agent should handle edge cases and ambiguity
 
 ---
 
@@ -121,7 +121,7 @@ Skill files follow a standard frontmatter block at the top:
 ```
 ---
 name: skill-name
-description: One-sentence trigger description used by Claude to decide when to load this skill.
+description: One-sentence trigger description used by the agent to decide when to load this skill.
 ---
 ```
 
