@@ -1,4 +1,4 @@
-# claude-skills
+# agent-skills
 
 A shared library of agent skill definitions. Skills teach your agent consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
 
