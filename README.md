@@ -68,9 +68,9 @@ Once installed, the agent activates a skill automatically when your request matc
 
 ## How to Use
 
-### Option 1 — Claude.ai (manual paste)
+### Option 1 — Manual paste
 
-1. Open a new Claude conversation.
+1. Open a new conversation with your agent.
 2. Copy the contents of the relevant `SKILL.md` file.
 3. Paste it at the start of your message, followed by your request.
 
@@ -82,28 +82,28 @@ Example:
 Write a story for developing the cache-invalidation Cloud Run service in OpenTofu for the XYZ Platform.
 ```
 
-### Option 2 — Claude Code (recommended)
+### Option 2 — Agent instructions file (recommended)
 
-If you use [Claude Code](https://docs.claude.ai/en/docs/claude-code/), you can reference skill files directly from the repo.
+Most agent tools load an instructions file automatically at the start of every session (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`, etc.).
 
 1. Clone this repo locally:
    ```bash
    git clone git@github.com:<your-org>/claude-skills.git
    ```
-2. In your `AGENTS.md` or project instructions, reference the skill:
+2. In your agent instructions file, reference the skill:
    ```
    Before writing any user story, read skills/user-story/SKILL.md.
    Before writing any technical story, read skills/technical-story/SKILL.md.
    ```
-3. Claude Code will load the skill automatically when triggered.
+3. The agent will load the skill automatically when triggered.
 
-### Option 3 — Claude.ai Projects (Team / Enterprise)
+### Option 3 — Project knowledge (Team / Enterprise)
 
-If your workspace is on Claude.ai Team or Enterprise:
+Many agent platforms support uploading files as shared project knowledge, making them available to all team members automatically.
 
-1. Create a Project for your team.
-2. Upload the relevant `SKILL.md` files as Project knowledge.
-3. All team members in the project will have the skills available automatically in every conversation.
+1. Create a project or workspace for your team.
+2. Upload the relevant `SKILL.md` files as project knowledge.
+3. All team members will have the skills available automatically in every conversation.
 
 ---
 
