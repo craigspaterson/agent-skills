@@ -24,19 +24,6 @@ A skill is a `SKILL.md` file that is loaded into the agent's context before a ta
 | `technical-story` | `skills/technical-story/SKILL.md` | Jira-formatted Technical Stories with AC — for IaC, CI/CD, IAM, Cloud Run, Pub/Sub, and backend logic |
 | `terraform-docs-inject` | `skills/terraform-docs-inject/SKILL.md` | Regenerate and inject Terraform documentation into `terraform/README.md` using `terraform-docs` |
 
-### When to use which
-
-| Request type | Skill |
-|---|---|
-| "Write a story for a new dashboard feature" | `user-story` |
-| "Story for provisioning a Cloud Run service via OpenTofu" | `technical-story` |
-| "Story for the GitHub Actions deploy workflow" | `technical-story` |
-| "Story for an IAM / Workload Identity binding" | `technical-story` |
-| "Story for a Pub/Sub subscription handler" | `technical-story` (Application sub-type) |
-| "Story for an API endpoint a user calls" | `user-story` |
-
-If a capability spans both (e.g. a new service with handler logic), produce one of each and link them as dependencies — the infrastructure story typically blocks the application story's integration testing.
-
 ---
 
 ## Install
