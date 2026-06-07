@@ -1,6 +1,6 @@
-# Claude Instructions
+# Agent Instructions
 
-This file is read automatically by Claude Code at the start of every session. It tells the agent which skills to load and provides project-specific context.
+This file is read automatically by your agent at the start of every session. It tells the agent which skills to load and provides project-specific context.
 
 ---
 

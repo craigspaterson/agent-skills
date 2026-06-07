@@ -90,7 +90,7 @@ If you use [Claude Code](https://docs.claude.ai/en/docs/claude-code/), you can r
    ```bash
    git clone git@github.com:<your-org>/claude-skills.git
    ```
-2. In your `CLAUDE.md` or project instructions, reference the skill:
+2. In your `AGENTS.md` or project instructions, reference the skill:
    ```
    Before writing any user story, read skills/user-story/SKILL.md.
    Before writing any technical story, read skills/technical-story/SKILL.md.
