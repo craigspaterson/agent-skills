@@ -127,7 +127,7 @@ Then [observable, verifiable outcome].
 
 ### Story Statement (the "As the / I need / So that")
 - "As the…" names the **system or platform** consuming the capability — e.g.
-  "As the CEP AEM platform", "As the `content-processor` service". Never a human persona.
+  "As the `<platform-name>` platform", "As the `<service-name>` service". Never a human persona.
 - "I need" = the capability or resource, stated at outcome level, not the implementation.
 - "So that" = the technical *why* — reliability, security, consistency, auditability,
   observability, testability. Not a restatement of "I need".
