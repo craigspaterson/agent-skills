@@ -1,5 +1,7 @@
 # agent-skills
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A shared library of agent skill definitions. Skills teach your agent consistent output formats, writing guidelines, and worked examples so every team member gets the same quality of output without having to re-explain conventions in every conversation.
 
 ---
