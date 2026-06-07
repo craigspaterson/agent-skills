@@ -7,10 +7,10 @@ This file is read automatically by your agent at the start of every session. It 
 ## Skills
 
 Before writing any user story (human-facing feature, UI, user journey), read:
-`<path-to-claude-skills>/skills/user-story/SKILL.md`
+`<path-to-agent-skills>/skills/user-story/SKILL.md`
 
 Before writing any technical story (IaC provisioning, GitHub Actions workflow, IAM binding, Cloud Run, Pub/Sub, backend handler logic), read:
-`<path-to-claude-skills>/skills/technical-story/SKILL.md`
+`<path-to-agent-skills>/skills/technical-story/SKILL.md`
 
 If unsure which story type applies, read both and use the decision table in `technical-story/SKILL.md` to choose. If a capability spans both, produce one of each and link them as dependencies.
 
