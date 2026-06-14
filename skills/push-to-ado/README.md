@@ -34,7 +34,7 @@ npx skills add craigspaterson/agent-skills/skills/push-to-ado
 
 After drafting a story with `/user-story` or `/technical-story`, say:
 
-```
+```text
 push to ADO
 ```
 
@@ -44,7 +44,7 @@ The agent extracts the title, description, acceptance criteria, story points, an
 
 When you have a structured backlog with Epics, Features, and Stories, say:
 
-```
+```text
 push this backlog to ADO
 ```
 
@@ -54,7 +54,7 @@ The agent writes a tailored call to `scripts/upload-hierarchy.ps1`, which create
 
 On success the agent returns the work item URL for each item created:
 
-```
+```text
 Work item created: AB#12345
 https://dev.azure.com/myorg/myproject/_workitems/edit/12345
 ```
