@@ -1,6 +1,9 @@
 # push-to-ado
 
-Uploads a drafted User Story or Technical Story to Azure DevOps as a work item.
+Uploads work items to Azure DevOps. Supports two modes:
+
+- **Single story** — push one drafted User Story or Technical Story via `upload.ps1`
+- **Full hierarchy** — create a complete Epic → Feature → Story backlog in one pass via `upload-hierarchy.ps1`
 
 ## Prerequisites
 
@@ -14,12 +17,12 @@ Uploads a drafted User Story or Technical Story to Azure DevOps as a work item.
 Set environment variables to avoid being prompted on every run:
 
 ```bash
-# ~/.claude/settings.json or your shell profile
+# ~/.claude/settings.json env block, or your shell profile
 export ADO_ORG=myorg
 export ADO_PROJECT=myproject
 ```
 
-Or pass them directly as script parameters (`-Org` / `-Project`).
+Or pass them directly as script parameters (`-Org` / `-Project`) for `upload.ps1`.
 
 ## Install
 
@@ -27,7 +30,7 @@ Or pass them directly as script parameters (`-Org` / `-Project`).
 npx skills add craigspaterson/agent-skills/skills/push-to-ado
 ```
 
-## Usage
+## Usage — single story
 
 After drafting a story with `/user-story` or `/technical-story`, say:
 
@@ -37,9 +40,19 @@ push to ADO
 
 The agent extracts the title, description, acceptance criteria, story points, and priority from the story in context, then calls `scripts/upload.ps1` to create the work item. It will ask for a parent feature ID if one wasn't provided.
 
+## Usage — full hierarchy
+
+When you have a structured backlog with Epics, Features, and Stories, say:
+
+```
+push this backlog to ADO
+```
+
+The agent writes a tailored call to `scripts/upload-hierarchy.ps1`, which creates all items in the correct parent–child order. Technical stories are created as `User Story` type with the tag `Technical`.
+
 ## Output
 
-On success the agent returns the work item URL:
+On success the agent returns the work item URL for each item created:
 
 ```
 Work item created: AB#12345
