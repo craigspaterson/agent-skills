@@ -1,16 +1,17 @@
 ---
 name: push-to-ado
-description: Uploads a drafted User Story or Technical Story to Azure DevOps as a work item, populating Title, Description, Acceptance Criteria, Story Points, Priority, and optionally linking a parent feature. Also supports creating a full Epic → Feature → Story hierarchy from a structured backlog. Use when the user says "push to ADO", "create in ADO", "upload to ADO", "add to ADO", or similar after a story has been drafted in conversation. Use upload-hierarchy.ps1 when the user provides a multi-level backlog with Epics, Features, and Stories.
+description: Uploads a drafted User Story or Technical Story to Azure DevOps as a work item, populating Title, Description, Acceptance Criteria, Story Points, Priority, and optionally linking a parent feature. Also supports creating a full Epic → Feature → Story hierarchy from a structured backlog, and updating existing work items in bulk. Use when the user says "push to ADO", "create in ADO", "upload to ADO", "add to ADO", "update ADO items", or similar after stories have been drafted in conversation.
 ---
 
 # Push to ADO
 
-Two scripts are available. Choose based on what the user provides:
+Three scripts are available. Choose based on what the user provides:
 
 | Scenario | Script |
 |---|---|
 | Single story drafted by `/user-story` or `/technical-story` | `upload.ps1` |
 | Full backlog with Epics → Features → Stories | `upload-hierarchy.ps1` |
+| Bulk update existing work items with improved content | `update-work-items.ps1` |
 
 ---
 
@@ -92,3 +93,36 @@ Capture the returned ID from each Epic/Feature call and pass it as `-ParentId` t
 $epicId    = New-WorkItem -Type "Epic"    -Title "My Epic" ...
 $featureId = New-WorkItem -Type "Feature" -Title "My Feature" -ParentId $epicId ...
              New-WorkItem -Type "User Story" -Title "My Story" -ParentId $featureId ...
+
+---
+
+## Bulk update existing items — `update-work-items.ps1`
+
+Use when stories already exist in ADO (created via `upload-hierarchy.ps1` or manually) and need their Title, Description, Acceptance Criteria, Story Points, or Priority replaced with improved content — for example, after re-drafting stories through `/user-story` or `/technical-story`.
+
+### How to use it
+
+1. Open `scripts/update-work-items.ps1` and replace the `Update-WorkItem` call blocks with the items to update, providing the known ADO work item ID for each.
+2. Run it:
+
+```powershell
+ADO_ORG=myorg ADO_PROJECT=myproject pwsh ~/.claude/skills/push-to-ado/scripts/update-work-items.ps1
+```
+
+### `Update-WorkItem` parameters
+
+| Parameter | Type | Required | Notes |
+|---|---|---|---|
+| `-Id` | int | yes | Existing ADO work item ID (e.g. 42) |
+| `-Title` | string | yes | Replaces the current title |
+| `-Description` | string | yes | Replaces System.Description; rendered as Markdown |
+| `-AcceptanceCriteria` | string | no | Replaces AC field; rendered as Markdown |
+| `-StoryPoints` | int | yes | Replaces current story points |
+| `-Priority` | string | yes | `Critical`, `High`, `Medium`, or `Low` |
+
+### Typical workflow
+
+1. Draft improved stories using `/user-story` or `/technical-story`
+2. Note the ADO ID of each item to update
+3. Populate `update-work-items.ps1` with one `Update-WorkItem` call per item
+4. Run the script — all fields are patched in a single PATCH request per item

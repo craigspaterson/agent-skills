@@ -1,9 +1,10 @@
 # push-to-ado
 
-Uploads work items to Azure DevOps. Supports two modes:
+Uploads and updates work items in Azure DevOps. Supports three modes:
 
 - **Single story** — push one drafted User Story or Technical Story via `upload.ps1`
 - **Full hierarchy** — create a complete Epic → Feature → Story backlog in one pass via `upload-hierarchy.ps1`
+- **Bulk update** — patch Title, Description, AC, Story Points, and Priority on existing items via `update-work-items.ps1`
 
 ## Prerequisites
 
@@ -50,11 +51,21 @@ push this backlog to ADO
 
 The agent writes a tailored call to `scripts/upload-hierarchy.ps1`, which creates all items in the correct parent–child order. Technical stories are created as `User Story` type with the tag `Technical`.
 
-## Output
+## Usage — bulk update
 
-On success the agent returns the work item URL for each item created:
+When you have existing ADO items with content that needs replacing (e.g. after re-drafting through `/user-story` or `/technical-story`), say:
 
 ```text
-Work item created: AB#12345
-https://dev.azure.com/myorg/myproject/_workitems/edit/12345
+update those ADO items
+```
+
+The agent populates `scripts/update-work-items.ps1` with one `Update-WorkItem` call per item using the known ADO IDs, then runs it to PATCH all items in a single pass.
+
+## Output
+
+On success the agent reports each item updated:
+
+```text
+AB#30  Submit Project Inquiry via Contact Form
+  -> Updated
 ```
