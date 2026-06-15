@@ -21,6 +21,9 @@
 .PARAMETER ParentId
     Optional. ADO work item ID of the parent feature to link as parent.
 
+.PARAMETER Tags
+    Optional. Semicolon-separated list of tags to apply (e.g. "Technical; Frontend").
+
 .PARAMETER Org
     Optional. ADO organisation name. Falls back to $env:ADO_ORG.
 
@@ -34,6 +37,7 @@ param(
     [Parameter(Mandatory)][int]$StoryPoints,
     [Parameter(Mandatory)][string]$Priority,
     [int]$ParentId,
+    [string]$Tags,
     [string]$Org,
     [string]$Project
 )
@@ -83,6 +87,10 @@ $patchOps.Add(@{ op = "add"; path = "/fields/Microsoft.VSTS.Common.AcceptanceCri
 $patchOps.Add(@{ op = "add"; path = "/multilineFieldsFormat/Microsoft.VSTS.Common.AcceptanceCriteria"; value = "Markdown" })
 $patchOps.Add(@{ op = "add"; path = "/fields/Microsoft.VSTS.Scheduling.StoryPoints";     value = $StoryPoints })
 $patchOps.Add(@{ op = "add"; path = "/fields/Microsoft.VSTS.Common.Priority";            value = $priorityValue })
+
+if ($Tags) {
+    $patchOps.Add(@{ op = "add"; path = "/fields/System.Tags"; value = $Tags })
+}
 
 if ($ParentId) {
     $parentUrl = "https://dev.azure.com/$Org/$([Uri]::EscapeDataString($Project))/_apis/wit/workItems/$ParentId"

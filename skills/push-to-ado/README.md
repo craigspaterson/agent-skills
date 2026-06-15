@@ -4,7 +4,7 @@ Uploads and updates work items in Azure DevOps. Supports three modes:
 
 - **Single story** — push one drafted User Story or Technical Story via `upload.ps1`
 - **Full hierarchy** — create a complete Epic → Feature → Story backlog in one pass via `upload-hierarchy.ps1`
-- **Bulk update** — patch Title, Description, AC, Story Points, and Priority on existing items via `update-work-items.ps1`
+- **Bulk update** — patch Title, Description, AC, Story Points, Priority, and Tags on existing items via `update-work-items.ps1`
 
 ## Prerequisites
 

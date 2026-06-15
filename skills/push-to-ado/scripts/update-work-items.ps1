@@ -22,7 +22,8 @@ function Update-WorkItem {
         [string]$Description,
         [string]$AcceptanceCriteria = "",
         [int]$StoryPoints,
-        [string]$Priority
+        [string]$Priority,
+        [string]$Tags = ""
     )
     $ops = [System.Collections.Generic.List[hashtable]]::new()
     $ops.Add(@{ op = "add"; path = "/fields/System.Title";                      value = $Title })
@@ -34,6 +35,9 @@ function Update-WorkItem {
     }
     $ops.Add(@{ op = "add"; path = "/fields/Microsoft.VSTS.Scheduling.StoryPoints"; value = $StoryPoints })
     $ops.Add(@{ op = "add"; path = "/fields/Microsoft.VSTS.Common.Priority";        value = $priorityMap[$Priority] })
+    if ($Tags) {
+        $ops.Add(@{ op = "add"; path = "/fields/System.Tags"; value = $Tags })
+    }
     $url  = "$baseUrl/_apis/wit/workItems/$Id`?api-version=7.1"
     $body = $ops | ConvertTo-Json -Depth 6
     Write-Host "  AB#$Id  $Title"
