@@ -1,6 +1,6 @@
 ---
 name: push-to-ado
-description: Uploads a drafted User Story or Technical Story to Azure DevOps as a work item, populating Title, Description, Acceptance Criteria, Story Points, Priority, and optionally linking a parent feature. Also supports creating a full Epic → Feature → Story hierarchy from a structured backlog, and updating existing work items in bulk. Use when the user says "push to ADO", "create in ADO", "upload to ADO", "add to ADO", "update ADO items", or similar after stories have been drafted in conversation.
+description: Uploads a drafted User Story or Technical Story to Azure DevOps as a work item, populating Title, Description, Acceptance Criteria, Story Points, Priority, and Tags, and optionally linking a parent feature. Also supports creating a full Epic → Feature → Story hierarchy from a structured backlog, and updating existing work items in bulk. Use when the user says "push to ADO", "create in ADO", "upload to ADO", "add to ADO", "update ADO items", or similar after stories have been drafted in conversation.
 ---
 
 # Push to ADO
@@ -31,6 +31,7 @@ Parse the story markdown (output of `/technical-story` or `/user-story`) and col
 | `-ParentId` | parent feature ID — ask user if not already in context |
 | `-Description` | composed markdown block: story statement + Out of Scope + Dependencies + Notes sections |
 | `-AcceptanceCriteria` | all AC blocks only (AC1, AC2, … formatted as markdown) |
+| `-Tags` | optional; semicolon-separated tags (e.g. `"Technical"`) — omit if none |
 
 Work item type is always `User Story` — hardcoded in the script.
 
@@ -119,6 +120,7 @@ ADO_ORG=myorg ADO_PROJECT=myproject pwsh ~/.claude/skills/push-to-ado/scripts/up
 | `-AcceptanceCriteria` | string | no | Replaces AC field; rendered as Markdown |
 | `-StoryPoints` | int | yes | Replaces current story points |
 | `-Priority` | string | yes | `Critical`, `High`, `Medium`, or `Low` |
+| `-Tags` | string | no | Semicolon-separated tags; replaces existing tags when provided |
 
 ### Typical workflow
 
