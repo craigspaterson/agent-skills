@@ -61,7 +61,7 @@ $item = Invoke-RestMethod -Method Get -Uri $getUrl -Headers $headers
 
 $title    = $item.fields.'System.Title'
 $state    = $item.fields.'System.State'
-$assignee = $item.fields.'System.AssignedTo'.uniqueName  # email; null if unassigned
+$assignee = ($item.fields.PSObject.Properties['System.AssignedTo']?.Value)?.uniqueName
 
 Write-Host ""
 Write-Host "Work item: AB#$numericId — $title"
