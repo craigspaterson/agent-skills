@@ -26,6 +26,7 @@ A skill is a `SKILL.md` file that is loaded into the agent's context before a ta
 | `technical-story` | `skills/technical-story/SKILL.md` | Jira-formatted Technical Stories with AC — for IaC, CI/CD, IAM, Cloud Run, Pub/Sub, and backend logic |
 | `terraform-docs-inject` | `skills/terraform-docs-inject/SKILL.md` | Regenerate and inject Terraform documentation into `terraform/README.md` using `terraform-docs` |
 | `push-to-ado` | `skills/push-to-ado/SKILL.md` | Upload a drafted User Story or Technical Story to Azure DevOps as a work item via `upload.ps1` |
+| `start-story` | `skills/start-story/SKILL.md` | Activate an ADO work item (set state to Active, assign to self) and create + push the feature branch |
 
 ---
 
@@ -53,6 +54,9 @@ npx skills add craigspaterson/agent-skills/skills/terraform-docs-inject
 
 # Push to ADO skill
 npx skills add craigspaterson/agent-skills/skills/push-to-ado
+
+# Start Story skill
+npx skills add craigspaterson/agent-skills/skills/start-story
 ```
 
 Once installed, the agent activates a skill automatically when your request matches its description.
