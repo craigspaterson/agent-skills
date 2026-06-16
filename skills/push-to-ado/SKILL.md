@@ -66,7 +66,7 @@ The script defines a `New-WorkItem` helper function that accepts any ADO work it
 
 ### How to use it
 
-1. Open `scripts/upload-hierarchy.ps1` and replace the work item definitions (lines 69 onward) with the user's backlog, following the existing call pattern.
+1. Open `scripts/upload-hierarchy.ps1` and replace the placeholder comment with `New-WorkItem` calls for the user's backlog, following the call pattern documented below.
 2. Run it:
 
 ```powershell
@@ -94,6 +94,7 @@ Capture the returned ID from each Epic/Feature call and pass it as `-ParentId` t
 $epicId    = New-WorkItem -Type "Epic"    -Title "My Epic" ...
 $featureId = New-WorkItem -Type "Feature" -Title "My Feature" -ParentId $epicId ...
              New-WorkItem -Type "User Story" -Title "My Story" -ParentId $featureId ...
+```
 
 ---
 
@@ -103,7 +104,7 @@ Use when stories already exist in ADO (created via `upload-hierarchy.ps1` or man
 
 ### How to use it
 
-1. Open `scripts/update-work-items.ps1` and replace the `Update-WorkItem` call blocks with the items to update, providing the known ADO work item ID for each.
+1. Open `scripts/update-work-items.ps1` and replace the placeholder comment with one `Update-WorkItem` call per item, providing the known ADO work item ID for each.
 2. Run it:
 
 ```powershell

@@ -63,9 +63,13 @@ The agent populates `scripts/update-work-items.ps1` with one `Update-WorkItem` c
 
 ## Output
 
-On success the agent reports each item updated:
+On success the agent reports each item created or updated:
 
 ```text
-AB#30  Submit Project Inquiry via Contact Form
-  -> Updated
+  [Epic] My Epic
+    -> AB#101  https://dev.azure.com/myorg/myproject/_workitems/edit/101
+  [Feature] My Feature
+    -> AB#102  https://dev.azure.com/myorg/myproject/_workitems/edit/102
+  AB#103  My Story
+    -> Updated
 ```
