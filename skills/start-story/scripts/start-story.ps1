@@ -87,6 +87,10 @@ function New-FeatureBranch([string]$branch) {
 # ── GitHub flow ───────────────────────────────────────────────────────────────
 if ($tracker -eq 'github') {
     Write-Host "Checking gh CLI authentication..."
+    if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
+        Write-Error "gh CLI is not installed or not authenticated. Run 'gh auth login' first."
+        exit 1
+    }
     gh auth status 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Write-Error "gh CLI is not installed or not authenticated. Run 'gh auth login' first."
