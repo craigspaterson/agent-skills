@@ -30,7 +30,7 @@ task. It defines:
 | `technical-story` | `skills/technical-story/SKILL.md` | Jira-formatted Technical Stories with AC — for IaC, CI/CD, IAM, Cloud Run, Pub/Sub, and backend logic |
 | `terraform-docs-inject` | `skills/terraform-docs-inject/SKILL.md` | Regenerate and inject Terraform documentation into `terraform/README.md` using `terraform-docs` |
 | `push-to-ado` | `skills/push-to-ado/SKILL.md` | Upload a drafted User Story or Technical Story to Azure DevOps as a work item via `upload.ps1` |
-| `start-story` | `skills/start-story/SKILL.md` | Activate an ADO work item (set state to Active, assign to self) and create + push the feature branch |
+| `start-story` | `skills/start-story/SKILL.md` | Activate a work item or issue and create + push the feature branch — supports ADO work items and GitHub issues via the `ISSUE_TRACKER` config setting |
 
 ---
 
