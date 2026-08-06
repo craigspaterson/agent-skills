@@ -164,7 +164,7 @@ if ($needsState -or $needsAssignee) {
     if ($needsState)    { $patchOps.Add(@{ op = "add"; path = "/fields/System.State";      value = "Active" }) }
     if ($needsAssignee) { $patchOps.Add(@{ op = "add"; path = "/fields/System.AssignedTo"; value = $User }) }
 
-    $body     = $patchOps | ConvertTo-Json -Depth 3
+    $body     = $patchOps | ConvertTo-Json -Depth 3 -AsArray
     $patchUrl = "$baseUrl/_apis/wit/workItems/$numericId`?api-version=7.1"
 
     Write-Host ""
