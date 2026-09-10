@@ -31,6 +31,7 @@ task. It defines:
 | `terraform-docs-inject` | `skills/terraform-docs-inject/SKILL.md` | Regenerate and inject Terraform documentation into `terraform/README.md` using `terraform-docs` |
 | `push-to-ado` | `skills/push-to-ado/SKILL.md` | Upload a drafted User Story or Technical Story to Azure DevOps as a work item via `upload.ps1` |
 | `start-story` | `skills/start-story/SKILL.md` | Activate a work item or issue and create + push the feature branch — supports ADO work items and GitHub issues via the `ISSUE_TRACKER` config setting |
+| `resolve-copilot-review` | `skills/resolve-copilot-review/SKILL.md` | Triage GitHub Copilot's automated PR review comments, fix the confirmed issues, reply on each thread, and resolve the review threads |
 
 ---
 
@@ -61,6 +62,9 @@ npx skills add craigspaterson/agent-skills/skills/push-to-ado
 
 # Start Story skill
 npx skills add craigspaterson/agent-skills/skills/start-story
+
+# Resolve Copilot Review skill
+npx skills add craigspaterson/agent-skills/skills/resolve-copilot-review
 ```
 
 Once installed, the agent activates a skill automatically when your request
