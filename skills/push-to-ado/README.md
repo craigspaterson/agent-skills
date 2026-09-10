@@ -28,7 +28,7 @@ Or pass them directly as script parameters (`-Org` / `-Project`) for `upload.ps1
 ## Install
 
 ```bash
-npx skills add craigspaterson/agent-skills/skills/push-to-ado
+npx skills@latest add craigspaterson/agent-skills/skills/push-to-ado
 ```
 
 ## Usage — single story

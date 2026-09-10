@@ -52,7 +52,7 @@ Add `ISSUE_TRACKER` to the `env` block in `~/.claude/settings.json`:
 ## Install
 
 ```bash
-npx skills add craigspaterson/agent-skills/skills/start-story
+npx skills@latest add craigspaterson/agent-skills/skills/start-story
 ```
 
 ## Usage

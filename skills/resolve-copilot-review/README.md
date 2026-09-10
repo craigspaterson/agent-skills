@@ -13,7 +13,7 @@ issues, replies on each thread, and marks the review threads resolved.
 ## Install
 
 ```bash
-npx skills add craigspaterson/agent-skills/skills/resolve-copilot-review
+npx skills@latest add craigspaterson/agent-skills/skills/resolve-copilot-review
 ```
 
 ## Usage
