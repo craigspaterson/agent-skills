@@ -32,6 +32,7 @@ task. It defines:
 | `push-to-ado` | `skills/push-to-ado/SKILL.md` | Upload a drafted User Story or Technical Story to Azure DevOps as a work item via `upload.ps1` |
 | `start-story` | `skills/start-story/SKILL.md` | Activate a work item or issue and create + push the feature branch — supports ADO work items and GitHub issues via the `ISSUE_TRACKER` config setting |
 | `resolve-copilot-review` | `skills/resolve-copilot-review/SKILL.md` | Triage GitHub Copilot's automated PR review comments, fix the confirmed issues, reply on each thread, and resolve the review threads |
+| `create-pr` | `skills/create-pr/SKILL.md` | Create or update a GitHub pull request using the repo's own PR template, a Conventional Commits title, and a dynamically resolved assignee |
 
 ---
 
@@ -65,6 +66,9 @@ npx skills@latest add craigspaterson/agent-skills/skills/start-story
 
 # Resolve Copilot Review skill
 npx skills@latest add craigspaterson/agent-skills/skills/resolve-copilot-review
+
+# Create PR skill
+npx skills@latest add craigspaterson/agent-skills/skills/create-pr
 ```
 
 Once installed, the agent activates a skill automatically when your request
