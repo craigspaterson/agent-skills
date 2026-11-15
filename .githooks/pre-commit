@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Blocks commits that add secrets, sensitive files or personal/org identifiers.
+# Enable once per clone:  git config core.hooksPath .githooks
+# Personal deny-list (not tracked): .githooks/denylist.local, one extended regex per line
+# (DENYLIST_FILE overrides the path).
+# Bypass a reviewed false positive on one line with the marker:  allow-sensitive
+# CI: set SCAN_RANGE (e.g. base...head) to scan every commit in a range instead of the index,
+# so a secret added in one commit and removed in a later one is still caught.
+set -u
+cd "$(git rev-parse --show-toplevel)"
+fail=0
+report() { printf '  \033[31m✗\033[0m %s\n' "$1" >&2; fail=1; }
+
+# 1. Sensitive file names/paths
+name_re='(^|/)(\.env[^/]*|\.netrc|\.npmrc|\.pypirc|id_(rsa|dsa|ecdsa|ed25519)|credentials[^/]*|state\.json|config\.json|\.DS_Store|Thumbs\.db)$|\.(pem|key|p12|pfx|jks|keystore|tfstate|tfvars)(\.backup)?$'
+# 2. Secret patterns in added lines
+secret_re='AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{50,}|xox[abprs]-[A-Za-z0-9-]{10,}|sk-ant-[A-Za-z0-9_-]{20,}|sk-(proj|svcacct|admin)-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9]{32,}|AIza[0-9A-Za-z_-]{35}|eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|(password|passwd|secret|api[_-]?key|access[_-]?token|auth[_-]?token|client[_-]?secret)["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"'$<{ ]{8,}["'"'"']|(^|[^A-Za-z0-9_])[A-Za-z0-9_]*(api_?key|token|secret|password|passwd)[A-Za-z0-9_]*=[^[:space:]"'"'"'$<{(]{12,}|(SharedAccessKey|AccountKey)=[A-Za-z0-9+/=]{20,}|[a-z0-9]{52}[[:space:]]*$'
+# 3. Insecure patterns
+insecure_re='curl[^|]*\|[[:space:]]*(sudo[[:space:]]+)?(ba)?sh|Invoke-Expression[[:space:]]+\(?[[:space:]]*(iwr|irm|Invoke-WebRequest|Invoke-RestMethod)|iwr[^|]*\|[[:space:]]*iex|(-k|--insecure)[[:space:]].*https?://|NODE_TLS_REJECT_UNAUTHORIZED[[:space:]]*=[[:space:]]*0|verify[[:space:]]*=[[:space:]]*False|ConvertTo-SecureString[^|]*-AsPlainText|chmod[[:space:]]+(-R[[:space:]]+)?777'
+# 4. Personal/org identifiers: email addresses other than placeholders (whole-address match), plus deny-list
+email_re='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
+safe_email_re='^([^@]+@(example\.(com|org|net)|users\.noreply\.github\.com|anthropic\.com)|(noreply|no-reply|you|your-?[a-z]*|git)@[^@]+)$'
+deny_file=${DENYLIST_FILE:-.githooks/denylist.local}
+denylist=""
+[ -f "$deny_file" ] && denylist=$(grep -vE '^[[:space:]]*(#|$)' "$deny_file" | paste -sd'|' -)
+
+# Reads NUL-delimited paths from stdin. $1 = context suffix for messages.
+scan_names() {
+  local f
+  while IFS= read -r -d '' f; do
+    [[ "$f" =~ \.example(\.|$) ]] && continue
+    if [[ "$f" =~ $name_re ]]; then report "sensitive file: $f$1"; fi
+  done
+}
+
+# Reads a -U0 patch from stdin. $1 = context suffix for messages.
+scan_patch() {
+  local l body here m file="" line=0
+  while IFS= read -r l; do
+    case "$l" in
+      '+++ b/'*) file=${l#+++ b/}; continue ;;
+      '+++ '*|'--- '*|diff*|index*|new*|deleted*|similarity*|rename*|Binary*) continue ;;
+      '@@ '*) line=$(sed -E 's/^@@ -[0-9,]+ \+([0-9]+).*/\1/' <<<"$l"); continue ;;
+      +*) body=${l:1} ;;
+      *) continue ;;
+    esac
+    here="$file:$line$1"; line=$((line+1))
+    [[ "$body" == *allow-sensitive* ]] && continue
+    [[ "$file" == .githooks/pre-commit ]] && continue
+    if grep -Eiq -- "$secret_re" <<<"$body"; then report "possible secret at $here"; fi
+    if grep -Eiq -- "$insecure_re" <<<"$body"; then report "insecure pattern at $here"; fi
+    if m=$(grep -Eio -- "$email_re" <<<"$body" | grep -Eiv -- "$safe_email_re" | head -1) && [ -n "$m" ]; then
+      report "email address at $here: $m"
+    fi
+    if [ -n "$denylist" ] && grep -Eiq -- "$denylist" <<<"$body"; then report "deny-listed term at $here"; fi
+  done
+}
+
+if [ -n "${SCAN_RANGE:-}" ]; then
+  # base...head -> base..head: every non-merge commit the range adds, each against its parent.
+  for c in $(git rev-list --no-merges --reverse "${SCAN_RANGE/.../..}"); do
+    ctx=" (commit ${c:0:7})"
+    scan_names "$ctx" < <(git diff-tree -r -z --root --no-commit-id --name-only --diff-filter=ACMR "$c")
+    scan_patch "$ctx" < <(git -c core.quotePath=false diff-tree -r -p -U0 --no-color --root --no-commit-id --diff-filter=ACMR "$c")
+  done
+else
+  scan_names "" < <(git diff --cached -z --name-only --diff-filter=ACMR)
+  scan_patch "" < <(git -c core.quotePath=false diff --cached -U0 --no-color --diff-filter=ACMR)
+fi
+
+if [ "$fail" -ne 0 ]; then
+  printf '\nCommit blocked. Remove the item, or append "allow-sensitive" to a reviewed false-positive line.\n' >&2
+  exit 1
+fi

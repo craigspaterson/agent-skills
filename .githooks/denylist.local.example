@@ -1,0 +1,4 @@
+# Copy to denylist.local (git-ignored). One extended regex per line, case-insensitive.
+# Add your employer, internal repo/org names, project names and personal identifiers.
+# your-company
+# internal-repo-name

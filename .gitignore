@@ -6,3 +6,6 @@ Thumbs.db
 .env
 *token*
 *secret*
+
+# Local git hook deny-list
+.githooks/denylist.local
