@@ -22,17 +22,37 @@ jobs:
   sensitive-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The PR is scan input only: no code from it runs while the deny-list is present.
+      - name: Check out PR commits
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
           persist-credentials: false
+          path: pr
+      - name: Check out trusted scanner from the base branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          sparse-checkout: .githooks/pre-commit
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+          path: trusted
       # Org and personal terms live in the SENSITIVE_DENYLIST repository secret (one
       # regex per line), never in the repo. Forked PRs get no secrets and skip that list.
-      - name: Write deny-list
+      - name: Scan every PR commit
         env:
           DENYLIST: ${{ secrets.SENSITIVE_DENYLIST }}
-        run: printf '%s\n' "$DENYLIST" > .githooks/denylist.local
-      - name: Scan PR changes
-        env:
           SCAN_RANGE: ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
-        run: bash .githooks/pre-commit
+        run: |
+          scanner="$GITHUB_WORKSPACE/trusted/.githooks/pre-commit"
+          if [ -f "$scanner" ]; then
+            export DENYLIST_FILE="$RUNNER_TEMP/denylist"
+            printf '%s\n' "$DENYLIST" > "$DENYLIST_FILE"
+          else
+            # Base branch has no scanner yet (the PR that adds it): run the PR's copy
+            # without the deny-list, so no secret is exposed to PR-controlled code.
+            echo "::warning::No scanner on the base branch; using the PR's copy without the deny-list."
+            scanner="$GITHUB_WORKSPACE/pr/.githooks/pre-commit"
+          fi
+          cd pr && bash "$scanner"
