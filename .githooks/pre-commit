@@ -3,8 +3,10 @@
 # Enable once per clone:  git config core.hooksPath .githooks
 # Personal deny-list (not tracked): .githooks/denylist.local, one extended regex per line.
 # Bypass a reviewed false positive on one line with the marker:  allow-sensitive
+# CI: set SCAN_RANGE (e.g. base...head) to scan a commit range instead of the index.
 set -u
 cd "$(git rev-parse --show-toplevel)"
+if [ -n "${SCAN_RANGE:-}" ]; then diff_src=("$SCAN_RANGE"); else diff_src=(--cached); fi
 fail=0
 report() { printf '  \033[31m✗\033[0m %s\n' "$1" >&2; fail=1; }
 
@@ -13,7 +15,7 @@ name_re='(^|/)(\.env(\..*)?|\.netrc|\.npmrc|\.pypirc|id_(rsa|dsa|ecdsa|ed25519)|
 while IFS= read -r f; do
   [[ "$f" =~ \.example(\.|$) ]] && continue
   if [[ "$f" =~ $name_re ]]; then report "sensitive file staged: $f"; fi
-done < <(git diff --cached --name-only --diff-filter=ACMR)
+done < <(git diff "${diff_src[@]}" --name-only --diff-filter=ACMR)
 
 # 2. Secret patterns in added lines
 secret_re='AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{50,}|xox[abprs]-[A-Za-z0-9-]{10,}|sk-ant-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9]{32,}|AIza[0-9A-Za-z_-]{35}|eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|(password|passwd|secret|api[_-]?key|access[_-]?token|auth[_-]?token|client[_-]?secret)["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"'$<{ ]{8,}["'"'"']|(SharedAccessKey|AccountKey)=[A-Za-z0-9+/=]{20,}|[a-z0-9]{52}[[:space:]]*$'
@@ -44,7 +46,7 @@ while IFS= read -r l; do
     report "email address at $here: $m"
   fi
   if [ -n "$denylist" ] && grep -Eiq -- "$denylist" <<<"$body"; then report "deny-listed term at $here"; fi
-done < <(git diff --cached -U0 --no-color --diff-filter=ACMR)
+done < <(git diff "${diff_src[@]}" -U0 --no-color --diff-filter=ACMR)
 
 if [ "$fail" -ne 0 ]; then
   printf '\nCommit blocked. Remove the item, or append "allow-sensitive" to a reviewed false-positive line.\n' >&2
