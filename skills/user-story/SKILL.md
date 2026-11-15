@@ -5,7 +5,8 @@ description: Draft Jira-formatted User Stories with Acceptance Criteria. Use thi
 
 # User Story Skill
 
-Draft polished, Jira-ready User Stories with Acceptance Criteria following agile best practices.
+Draft polished, Jira-ready User Stories with Acceptance Criteria following agile
+best practices.
 
 ---
 
@@ -13,7 +14,7 @@ Draft polished, Jira-ready User Stories with Acceptance Criteria following agile
 
 Every user story must follow this exact structure:
 
-```
+```markdown
 **Title:** [Short, imperative-phrased summary — max 10 words]
 
 **Type:** Story  
@@ -69,34 +70,44 @@ Then [expected outcome].
 ## Writing Guidelines
 
 ### Title
+
 - Imperative verb ("Add", "Enable", "Display", "Allow", "Support")
 - Never start with "As a user..."
 - Specific enough to distinguish from other tickets at a glance
 
 ### Persona
-- Be specific: prefer "logged-in customer", "admin user", "guest visitor" over generic "user"
+
+- Be specific: prefer "logged-in customer", "admin user", "guest visitor" over
+  generic "user"
 - Match the persona to the system context if provided
 
 ### Story Statement (the "As a / I want / So that")
+
 - "I want" = the feature action, not the business outcome
 - "So that" = the *why* — business value, not just a restatement of I want
 - Avoid technical implementation details in the story statement
 
 ### Acceptance Criteria (AC[N] - Name / Given/When/Then)
-- Each criterion is labeled **AC[N] - Name** on its own line, where N is a sequential number and Name is a short descriptive title for the criterion
+
+- Each criterion is labeled **AC[N] - Name** on its own line, where N is a
+  sequential number and Name is a short descriptive title for the criterion
 - The label is separated from the Given/When/Then block by a blank line
 - Each criterion tests ONE behavior
 - Given, When, and Then are each on their own line
 - "Given" = system state or precondition
 - "When" = the user action or event
 - "Then" = the observable, verifiable outcome
-- Use concrete, testable language — avoid vague words like "fast", "easy", "properly"
+- Use concrete, testable language — avoid vague words like "fast", "easy",
+  "properly"
 - Cover happy path first, then edge cases and error states
-- Include at least one negative/error case (e.g., invalid input, missing permission)
+- Include at least one negative/error case (e.g., invalid input, missing
+  permission)
 - Separate each AC block with a horizontal rule (`---`) for markdown readability
 
 ### Story Points
+
 Default guidance (adjust to context if user specifies team conventions):
+
 - **1** — Trivial change, < 2 hours
 - **2** — Simple, well-understood, < half a day
 - **3** — Small feature, some unknowns, ~1 day
@@ -105,6 +116,7 @@ Default guidance (adjust to context if user specifies team conventions):
 - **13** — Very large, consider splitting
 
 ### Priority
+
 - **Critical** — Blocker, production issue, or must-have for launch
 - **High** — Important for the current sprint goal
 - **Medium** — Valuable, but not blocking
@@ -114,12 +126,20 @@ Default guidance (adjust to context if user specifies team conventions):
 
 ## Behavior Rules
 
-1. **Always produce a complete story** — never leave placeholders like "[describe here]". Make reasonable assumptions and note them in the Notes section.
-2. **Ask before assuming** only if the user's input is genuinely too vague to produce any meaningful story. Otherwise, draft first and offer to refine.
-3. **Split large features** — if the request describes multiple independent user journeys, produce multiple stories and flag that they should be separate Jira tickets.
-4. **Match the user's domain** — use their terminology (e.g., "merchant", "patient", "student") rather than generic words.
-5. **Never include implementation details** in the story statement. They belong in Notes or a separate technical task ticket.
-6. **Markdown formatting** — output should be clean Markdown that renders well in Jira's description field. Use `**bold**` for section headers.
+1. **Always produce a complete story** — never leave placeholders like
+   "[describe here]". Make reasonable assumptions and note them in the Notes
+   section.
+2. **Ask before assuming** only if the user's input is genuinely too vague to
+   produce any meaningful story. Otherwise, draft first and offer to refine.
+3. **Split large features** — if the request describes multiple independent user
+   journeys, produce multiple stories and flag that they should be separate Jira
+   tickets.
+4. **Match the user's domain** — use their terminology (e.g., "merchant",
+   "patient", "student") rather than generic words.
+5. **Never include implementation details** in the story statement. They belong
+   in Notes or a separate technical task ticket.
+6. **Markdown formatting** — output should be clean Markdown that renders well
+   in Jira's description field. Use `**bold**` for section headers.
 
 ---
 
@@ -130,7 +150,8 @@ Default guidance (adjust to context if user specifies team conventions):
 **Input:** "User login with Google"
 
 **Output:**
-```
+
+```markdown
 **Title:** Add Google OAuth Single Sign-On for Users
 
 **Type:** Story  
@@ -208,6 +229,7 @@ Assumed standard web OAuth 2.0 flow. Mobile deep-link handling should be a separ
 ## Refinement Flow
 
 After producing a story, offer these follow-up options if appropriate:
+
 - "Would you like me to split this into smaller stories?"
 - "Should I add more edge case criteria?"
 - "Want me to draft the linked technical task ticket?"
