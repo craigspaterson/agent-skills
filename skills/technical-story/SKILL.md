@@ -5,67 +5,70 @@ description: Draft Jira-formatted Technical Stories (Infrastructure and Applicat
 
 # Technical Story Skill
 
-Draft polished, Jira-ready Technical Stories with Acceptance Criteria, for backlog
-items that describe system or engineering concerns rather than a human user experience.
+Draft polished, Jira-ready Technical Stories with Acceptance Criteria, for
+backlog items that describe system or engineering concerns rather than a human
+user experience.
 
-This skill complements the `user-story` skill. A User Story centres on a human persona
-and the value they get; a Technical Story centres on the **system or platform** and the
-technical outcome (reliability, security, consistency, observability, testability). The
-consumer of the capability is the platform itself, so the story statement names the
-system, not a human role.
+This skill complements the `user-story` skill. A User Story centres on a human
+persona and the value they get; a Technical Story centres on the **system or
+platform** and the technical outcome (reliability, security, consistency,
+observability, testability). The consumer of the capability is the platform
+itself, so the story statement names the system, not a human role.
 
 ---
 
 ## Step 1 — Confirm This Is a Technical Story
 
-Use this skill when the PBI describes an engineering concern with no direct human actor.
-If the item describes a human-facing feature, UI, or classic experience, use the
+Use this skill when the PBI describes an engineering concern with no direct
+human actor. If the item describes a human-facing feature, UI, or classic
+experience, use the
 `user-story` skill instead.
 
-| Signal in the request | Story type |
-|---|---|
-| IaC resource provisioning (Cloud Run, GCS, Pub/Sub, LB) | **Technical** |
-| IAM / service account / Workload Identity configuration | **Technical** |
+| Signal in the request                                     | Story type    |
+| --------------------------------------------------------- | ------------- |
+| IaC resource provisioning (Cloud Run, GCS, Pub/Sub, LB)   | **Technical** |
+| IAM / service account / Workload Identity configuration   | **Technical** |
 | GitHub Actions / CI-CD / OpenTofu apply / deploy workflow | **Technical** |
-| Artifact Registry publish, prune, or versioning | **Technical** |
-| Backend handler, function logic, message processing | **Technical** |
-| API endpoint a human directly calls in a journey | User Story |
-| Dashboard, screen, form, or UI feature | User Story |
-| Auth flow described from the user's perspective | User Story |
+| Artifact Registry publish, prune, or versioning           | **Technical** |
+| Backend handler, function logic, message processing       | **Technical** |
+| API endpoint a human directly calls in a journey          | User Story    |
+| Dashboard, screen, form, or UI feature                    | User Story    |
+| Auth flow described from the user's perspective           | User Story    |
 
-If genuinely mixed (e.g. "let users export a report" where the export job is the work),
-split it: a User Story for the experience and a Technical Story for the enabling job,
-linked as dependencies.
+If genuinely mixed (e.g. "let users export a report" where the export job is the
+work), split it: a User Story for the experience and a Technical Story for the
+enabling job, linked as dependencies.
 
 ---
 
 ## Step 2 — Choose the Sub-Type
 
-Every Technical Story is one of two sub-types. Pick based on the primary concern:
+Every Technical Story is one of two sub-types. Pick based on the primary
+concern:
 
-- **Infrastructure** — provisioning, configuration, access, pipelines. The deliverable
-  is a resource, binding, or workflow that exists and behaves correctly. Owners are
-  typically platform/infra engineers. Definition of Done is verified in the cloud
-  console, the IaC plan, or the pipeline run.
-- **Application** — logic that runs *on* the infrastructure. The deliverable is correct
-  behaviour: inputs handled, outputs produced, failures managed, logs emitted. Owners
-  are typically application engineers. Definition of Done is verified by tests and
-  observed runtime behaviour.
+- **Infrastructure** — provisioning, configuration, access, pipelines. The
+  deliverable is a resource, binding, or workflow that exists and behaves
+  correctly. Owners are typically platform/infra engineers. Definition of Done
+  is verified in the cloud console, the IaC plan, or the pipeline run.
+- **Application** — logic that runs *on* the infrastructure. The deliverable is
+  correct behaviour: inputs handled, outputs produced, failures managed, logs
+  emitted. Owners are typically application engineers. Definition of Done is
+  verified by tests and observed runtime behaviour.
 
-A single capability often needs **both**: one Infrastructure story to provision the
-Cloud Run service, one Application story for its handler logic. When that is the case,
-produce both and link them — the Infrastructure story typically blocks the Application
-story's integration testing.
+A single capability often needs **both**: one Infrastructure story to provision
+the Cloud Run service, one Application story for its handler logic. When that is
+the case, produce both and link them — the Infrastructure story typically blocks
+the Application story's integration testing.
 
 ---
 
 ## Output Format
 
-Use this exact structure. It mirrors the `user-story` skill's format so the two sit
-side by side, with two differences: the `Type` line names the sub-type, and the story
-statement names the **system/platform**, not a persona.
+Use this exact structure. It mirrors the `user-story` skill's format so the two
+sit side by side, with two differences: the `Type` line names the sub-type, and
+the story statement names the **system/platform**, not a persona.
 
-```
+```markdown
 **Title:** [Short, imperative-phrased summary — max 10 words]
 
 **Type:** Technical Story — [Infrastructure / Application]
@@ -121,35 +124,46 @@ Then [observable, verifiable outcome].
 ## Writing Guidelines
 
 ### Title
+
 - Imperative verb ("Provision", "Implement", "Configure", "Publish", "Enable").
 - Specific enough to distinguish from other tickets at a glance.
-- Name the resource or workflow ("Provision Cloud Run Service via OpenTofu for X").
+- Name the resource or workflow ("Provision Cloud Run Service via OpenTofu for
+  X").
 
 ### Story Statement (the "As the / I need / So that")
+
 - "As the…" names the **system or platform** consuming the capability — e.g.
-  "As the `<platform-name>` platform", "As the `<service-name>` service". Never a human persona.
-- "I need" = the capability or resource, stated at outcome level, not the implementation.
-- "So that" = the technical *why* — reliability, security, consistency, auditability,
-  observability, testability. Not a restatement of "I need".
+  "As the `<platform-name>` platform", "As the `<service-name>` service". Never
+  a human persona.
+- "I need" = the capability or resource, stated at outcome level, not the
+  implementation.
+- "So that" = the technical *why* — reliability, security, consistency,
+  auditability, observability, testability. Not a restatement of "I need".
 
 ### Acceptance Criteria (AC[N] - Name / Given/When/Then)
-- Each criterion is labelled **AC[N] - Name** on its own line, separated from the
-  Given/When/Then block by a blank line.
+
+- Each criterion is labelled **AC[N] - Name** on its own line, separated from
+  the Given/When/Then block by a blank line.
 - Given, When, and Then are each on their own line.
-- "Given" = system state or precondition. "When" = the trigger, operation, or event.
-  "Then" = the observable, verifiable outcome.
-- Each criterion tests ONE behaviour. Use concrete, testable language — avoid vague
-  words like "fast", "secure", "properly". Prefer checkable facts ("plan shows zero
-  changes", "IAM binding is exactly these two roles", "log entry has severity ERROR").
-- Cover the happy path first, then failure and edge cases. Always include at least one
-  failure/negative case.
+- "Given" = system state or precondition. "When" = the trigger, operation, or
+  event. "Then" = the observable, verifiable outcome.
+- Each criterion tests ONE behaviour. Use concrete, testable language — avoid
+  vague words like "fast", "secure", "properly". Prefer checkable facts ("plan
+  shows zero changes", "IAM binding is exactly these two roles", "log entry has
+  severity ERROR").
+- Cover the happy path first, then failure and edge cases. Always include at
+  least one failure/negative case.
 - Separate each AC block with a horizontal rule (`---`).
 
 ### Story Points
-- **1** — Trivial, < 2 hours · **2** — Simple, < half a day · **3** — Small, ~1 day
-- **5** — Medium, a few days · **8** — Complex, ~1 week · **13** — Very large, split it
+
+- **1** — Trivial, < 2 hours · **2** — Simple, < half a day · **3** — Small, ~1
+  day
+- **5** — Medium, a few days · **8** — Complex, ~1 week · **13** — Very large,
+  split it
 
 ### Priority
+
 - **Critical** — Blocker or production issue · **High** — Current sprint goal
 - **Medium** — Valuable, not blocking · **Low** — Nice-to-have
 
@@ -157,20 +171,24 @@ Then [observable, verifiable outcome].
 
 ## AC Coverage Checklists
 
-Use the checklist matching the sub-type to make sure no common concern is missed. Not
-every item must appear in every story — they are prompts, not mandatory fields.
+Use the checklist matching the sub-type to make sure no common concern is
+missed. Not every item must appear in every story — they are prompts, not
+mandatory fields.
 
 ### Infrastructure
+
 - Provisioning success — resource exists with expected name/region/config.
-- IAM / service account — least-privilege bindings, no broad project-level grants.
+- IAM / service account — least-privilege bindings, no broad project-level
+  grants.
 - Authentication — Workload Identity Federation, no static service-account keys.
-- Environment parity — names follow convention, all values sourced from variables,
-  no hardcoded environment references.
+- Environment parity — names follow convention, all values sourced from
+  variables, no hardcoded environment references.
 - Secret handling — credentials from Secret Manager, no plaintext in config.
 - Idempotency / drift — re-apply produces zero unintended changes.
 - Failure handling — non-zero exits surface clearly, no silent partial state.
 
 ### Application
+
 - Happy path — well-formed input processed, expected action completes.
 - Malformed / invalid input — rejected gracefully, logged, no crash.
 - Downstream failure — retries or fails cleanly per policy, error logged.
@@ -182,18 +200,19 @@ every item must appear in every story — they are prompts, not mandatory fields
 
 ## Behavior Rules
 
-1. **Always produce a complete story** — never leave placeholders. Make reasonable
-   assumptions and record them in Notes.
+1. **Always produce a complete story** — never leave placeholders. Make
+   reasonable assumptions and record them in Notes.
 2. **Default to the user's domain terminology** — match their resource names,
    environment suffixes, and conventions rather than generic placeholders.
-3. **Split when a capability spans infrastructure and application** — produce both
-   stories and link them as dependencies, with the infra story typically blocking the
-   application story's integration testing.
+3. **Split when a capability spans infrastructure and application** — produce
+   both stories and link them as dependencies, with the infra story typically
+   blocking the application story's integration testing.
 4. **Prefer environment-agnostic stories** when the user works across multiple
-   environments — one story with environment as a variable, unless the user asks for
-   per-environment stories (e.g. gamma and prod as separate child stories).
+   environments — one story with environment as a variable, unless the user asks
+   for per-environment stories (e.g. gamma and prod as separate child stories).
 5. **Keep implementation specifics in Notes or AC**, not in the story statement.
-6. **Clean Markdown** that renders well in Jira's description field; `**bold**` headers.
+6. **Clean Markdown** that renders well in Jira's description field; `**bold**`
+   headers.
 
 ---
 
@@ -204,7 +223,8 @@ every item must appear in every story — they are prompts, not mandatory fields
 **Input:** "Story for provisioning a Cloud Run service in OpenTofu"
 
 **Output:**
-```
+
+```markdown
 **Title:** Provision Cloud Run Service via OpenTofu for content-processor
 
 **Type:** Technical Story — Infrastructure
@@ -279,7 +299,8 @@ child stories if the team follows per-environment granularity.
 **Input:** "Story for the content-processor function logic"
 
 **Output:**
-```
+
+```markdown
 **Title:** Implement content-processor Cloud Run Handler Logic
 
 **Type:** Technical Story — Application
@@ -353,7 +374,10 @@ matches the error-handling policy before finalising.
 ## Refinement Flow
 
 After producing a story, offer relevant follow-ups:
-- "Want me to draft the linked Infrastructure (or Application) story so the pair is complete?"
-- "Should I split this per-environment (e.g. gamma and prod as separate stories)?"
+
+- "Want me to draft the linked Infrastructure (or Application) story so the pair
+  is complete?"
+- "Should I split this per-environment (e.g. gamma and prod as separate
+  stories)?"
 - "Want more failure/edge-case criteria added?"
 - "Need me to adjust story points or priority?"

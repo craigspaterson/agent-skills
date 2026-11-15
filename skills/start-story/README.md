@@ -1,20 +1,23 @@
 # start-story
 
 Activates a work item or issue and creates the feature branch in one step.
-Supports **ADO work items** and **GitHub issues**, selected via the `ISSUE_TRACKER`
-config setting.
+Supports **ADO work items** and **GitHub issues**, selected via the
+`ISSUE_TRACKER` config setting.
 
 ## Prerequisites
 
-- [PowerShell 7+](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell) (`pwsh`)
+- [PowerShell 7+](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
+  (`pwsh`)
 
 **GitHub flow:**
 
-- [GitHub CLI](https://cli.github.com/) (`gh`) installed and authenticated (`gh auth login`)
+- [GitHub CLI](https://cli.github.com/) (`gh`) installed and authenticated (`gh
+  auth login`)
 
 **ADO flow:**
 
-- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) (`az`)
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+  (`az`)
 - Logged in to Azure: `az login`
 - ADO access to the target organisation and project
 
@@ -45,9 +48,9 @@ Add `ISSUE_TRACKER` to the `env` block in `~/.claude/settings.json`:
 }
 ```
 
-> **Fallback:** If `ISSUE_TRACKER` is not set but `ADO_ORG` is present, the skill
-> behaves as `ISSUE_TRACKER=ado` with no error — existing ADO users require no
-> migration.
+> **Fallback:** If `ISSUE_TRACKER` is not set but `ADO_ORG` is present, the
+> skill behaves as `ISSUE_TRACKER=ado` with no error — existing ADO users
+> require no migration.
 
 ## Install
 
@@ -90,8 +93,8 @@ creating it, and exit with a clear message if it does.
 
 ## Branch naming
 
-| Tracker | Example branch |
-|---------|---------------|
+| Tracker | Example branch                          |
+| ------- | --------------------------------------- |
 | GitHub  | `feature/gh-3-add-rate-limiting-to-api` |
 | ADO     | `feature/AB42-add-rate-limiting-to-api` |
 

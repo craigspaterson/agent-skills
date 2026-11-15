@@ -16,9 +16,9 @@ Conventional Commits-style title and the assignee resolved dynamically
 No required configuration — the skill works out of the box for any repo
 under a GitHub remote. One optional override:
 
-| Variable        | Purpose                                                              | Default                          |
-|------------------|-----------------------------------------------------------------------|-----------------------------------|
-| `PR_ASSIGNEE`    | GitHub username to assign the PR to                                   | current `gh` user (`gh api user --jq .login`) |
+| Variable      | Purpose                             | Default                                       |
+| ------------- | ----------------------------------- | --------------------------------------------- |
+| `PR_ASSIGNEE` | GitHub username to assign the PR to | current `gh` user (`gh api user --jq .login`) |
 
 Set it in the `env` block of `~/.claude/settings.json` if you want PRs
 assigned to someone other than whoever is running the skill (e.g. a shared

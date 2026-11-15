@@ -5,10 +5,10 @@
 Only the latest commit on `main` is supported with security fixes. No versioned
 releases are published from this repository.
 
-| Version | Supported |
-| ------- | --------- |
-| `main` (latest) | Yes |
-| Older commits | No |
+| Version         | Supported |
+| --------------- | --------- |
+| `main` (latest) | Yes       |
+| Older commits   | No        |
 
 ## Reporting a Vulnerability
 
@@ -22,7 +22,8 @@ Use one of the following private reporting paths:
 2. Click **Report a vulnerability**.
 3. Fill in the details and submit.
 
-**Option 2 — Draft security advisory (fallback if the button above is unavailable):**
+**Option 2 — Draft security advisory (fallback if the button above is
+unavailable):**
 
 1. Go to **Security → Advisories** in this repository.
 2. Click **New draft security advisory**.
