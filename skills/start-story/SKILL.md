@@ -1,6 +1,6 @@
 ---
 name: start-story
-description: Activates a work item or issue and creates the feature branch in one step. Supports ADO work items and GitHub issues, selected via the ISSUE_TRACKER config setting. Use when the user says "start story", "start working on", "begin AB#N", "kick off AB#N", "start issue #N", or provides a work item/issue ID and wants to begin development.
+description: 'Activates a work item or issue and creates the feature branch in one step. Supports ADO work items and GitHub issues, selected via the ISSUE_TRACKER config setting. Use when the user says "start story", "start working on", "begin AB#N", "kick off AB#N", "start issue #N", or provides a work item/issue ID and wants to begin development.'
 ---
 
 # Start Story
