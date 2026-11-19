@@ -1,0 +1,27 @@
+{
+  "github_owner": "your-org-or-username",
+  "repos_root": "~/projects/my-workspace",
+  "repos": [
+    "repo-a",
+    "repo-b"
+  ],
+  "git_email": "you@example.com",
+  "issue_tracker": "github",
+  "ado": {
+    "org": "",
+    "project": "",
+    "user": ""
+  },
+  "deploy_workflows": [
+    {
+      "repo": "repo-a",
+      "workflow": "deploy.yml",
+      "label": "Latest deploys"
+    }
+  ],
+  "memory_dir": null,
+  "output": "markdown",
+  "output_dir": "~/standups",
+  "workday_start": "09:00",
+  "doc_type_url": null
+}
